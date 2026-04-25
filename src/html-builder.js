@@ -6,6 +6,9 @@ const { getHljsDarkCss, getHljsLightCss, getLangColorsDark, getLangColorsLight }
 const cssPath = path.join(__dirname, '..', 'styles', 'preview.css');
 const jsPath = path.join(__dirname, '..', 'scripts', 'preview.js');
 const mermaidPath = path.join(__dirname, '..', 'node_modules', 'mermaid', 'dist', 'mermaid.min.js');
+const katexJsPath = path.join(__dirname, '..', 'node_modules', 'katex', 'dist', 'katex.min.js');
+const katexCssPath = path.join(__dirname, '..', 'node_modules', 'katex', 'dist', 'katex.min.css');
+const katexAutoRenderPath = path.join(__dirname, '..', 'node_modules', 'katex', 'dist', 'contrib', 'auto-render.min.js');
 
 function buildHtml(body, title, isNavigation, webview) {
   const safeTitle = title.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -17,7 +20,11 @@ function buildHtml(body, title, isNavigation, webview) {
   const fadeInCss = isNavigation ? 'body { animation: fadeIn 0.3s ease; }' : '';
   const mermaidTheme = isDark ? 'dark' : 'default';
   const hasMermaid = body.indexOf('class="mermaid"') !== -1;
+  const hasMath = body.indexOf('class="math-') !== -1;
   const mermaidUri = webview.asWebviewUri(vscode.Uri.file(mermaidPath));
+  const katexJsUri = webview.asWebviewUri(vscode.Uri.file(katexJsPath));
+  const katexCssUri = webview.asWebviewUri(vscode.Uri.file(katexCssPath));
+  const katexAutoRenderUri = webview.asWebviewUri(vscode.Uri.file(katexAutoRenderPath));
   const nonce = getNonce();
 
   return '<!DOCTYPE html>\n' +
@@ -29,6 +36,7 @@ function buildHtml(body, title, isNavigation, webview) {
     '<style>' + hljsCss + '</style>\n' +
     '<style>\n' + previewCss + '\n' + fadeInCss + '\n</style>\n' +
     '<style>' + langCss + '</style>\n' +
+    (hasMath ? '<link rel="stylesheet" href="' + katexCssUri + '">\n' : '') +
     '</head>\n' +
     '<body>\n' +
     '<div id="search-bar">\n' +
@@ -42,6 +50,19 @@ function buildHtml(body, title, isNavigation, webview) {
     '<div id="toc-panel"><div id="toc-header">大纲</div><ul id="toc-list"></ul></div>\n' +
     '<div id="content">' + body + '</div>\n' +
     '<script nonce="' + nonce + '">\n' + previewJs + '\n<\/script>\n' +
+    (hasMath
+      ? '<script nonce="' + nonce + '" src="' + katexJsUri + '"><\/script>\n' +
+        '<script nonce="' + nonce + '" src="' + katexAutoRenderUri + '"><\/script>\n' +
+        '<script nonce="' + nonce + '">\n' +
+        'renderMathInElement(document.getElementById("content"), {\n' +
+        '  delimiters: [\n' +
+        '    { left: "$$", right: "$$", display: true },\n' +
+        '    { left: "$", right: "$", display: false }\n' +
+        '  ],\n' +
+        '  throwOnError: false\n' +
+        '});\n' +
+        '<\/script>\n'
+      : '') +
     (hasMermaid
       ? '<script nonce="' + nonce + '" src="' + mermaidUri + '"><\/script>\n' +
         '<script nonce="' + nonce + '">\n' +

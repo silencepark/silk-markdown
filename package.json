@@ -1,8 +1,8 @@
 {
-  "name": "silk-markdown",
-  "displayName": "Silk Markdown",
+  "name": "silk-md",
+  "displayName": "Silk MD",
   "description": "A silky-smooth Markdown reader for VS Code — beautiful preview with syntax highlighting, TOC outline, and seamless navigation.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "Rainy",
   "engines": {
     "vscode": "^1.80.0"

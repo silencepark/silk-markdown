@@ -194,3 +194,7 @@ mark.search-highlight.current { background: rgba(255,150,0,0.6); }
 /* Mermaid */
 .mermaid { margin: 0.8em 0; overflow-x: auto; }
 .mermaid svg { max-width: none !important; height: auto !important; }
+
+/* Math */
+.math-block { display: block; overflow-x: auto; margin: 0.8em 0; text-align: center; }
+.math-inline { display: inline; }
