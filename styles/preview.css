@@ -14,7 +14,11 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { padding-right: 200px; }
+html { padding-right: 0; }
+html.toc-open { padding-right: 200px; }
+@media (min-width: 1200px) {
+  html { transition: padding-right 0.3s ease; }
+}
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 body {
@@ -123,11 +127,12 @@ hr { border: none; border-top: 1px solid var(--border); margin: 1.5em 0; }
 
 /* 搜索栏 */
 #search-bar {
-  display: none; position: fixed; top: 12px; right: 220px; z-index: 300;
+  display: none; position: fixed; top: 12px; right: 16px; z-index: 300;
   background: var(--code-bg); border: 1px solid var(--border);
   border-radius: 6px; padding: 4px 10px; font-family: var(--sans);
   animation: tocFadeIn 0.15s ease; width: 320px;
 }
+.toc-open #search-bar { right: 220px; }
 #search-bar.visible { display: flex; align-items: center; gap: 8px; }
 #search-input {
   flex: 1; background: var(--bg); color: var(--fg);
@@ -146,16 +151,27 @@ mark.search-highlight { background: rgba(255,200,0,0.35); color: inherit; border
 mark.search-highlight.current { background: rgba(255,150,0,0.6); }
 
 /* 大纲 */
-#toc-toggle { display: none; }
-@keyframes tocFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes tocFadeIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+#toc-toggle {
+  position: fixed; top: 32px; right: 16px; z-index: 200;
+  background: var(--code-bg); color: var(--fg-muted);
+  border: 1px solid var(--border); border-radius: 6px;
+  width: 32px; height: 32px; font-size: 16px; line-height: 32px;
+  text-align: center; cursor: pointer; padding: 0;
+  transition: color 0.15s, background 0.15s, opacity 0.15s;
+  font-family: var(--sans); opacity: 0.6;
+}
+#toc-toggle:hover { opacity: 1; color: var(--fg); }
+#toc-toggle.active { opacity: 1; color: var(--link); }
 #toc-panel {
-  display: block; position: fixed; top: 32px; right: 16px; z-index: 199;
+  position: fixed; top: 32px; right: 16px; z-index: 199;
   background: transparent; border: none;
   border-left: 1px solid var(--border);
   border-radius: 0; box-shadow: none;
   width: 180px; max-height: calc(100vh - 48px); overflow-y: auto;
+  display: none;
 }
-#toc-panel.visible { display: block; }
+#toc-panel.visible { display: block; animation: tocFadeIn 0.15s ease; }
 #toc-header {
   padding: 8px 12px 4px; font-size: 0.75em; font-weight: 600;
   color: var(--fg-muted); text-transform: uppercase; letter-spacing: 0.05em;
@@ -174,3 +190,7 @@ mark.search-highlight.current { background: rgba(255,150,0,0.6); }
 #toc-list li[data-level="3"] { padding-left: 36px; }
 #toc-list li[data-level="4"] { padding-left: 48px; }
 #toc-list li[data-level="5"],#toc-list li[data-level="6"] { padding-left: 60px; }
+
+/* Mermaid */
+.mermaid { margin: 0.8em 0; overflow-x: auto; }
+.mermaid svg { max-width: none !important; height: auto !important; }

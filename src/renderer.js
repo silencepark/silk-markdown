@@ -1,5 +1,4 @@
 const vscode = require('vscode');
-const hljs = require('highlight.js');
 const path = require('path');
 const { buildHtml } = require('./html-builder');
 
@@ -10,7 +9,7 @@ async function renderPanel(panel, text, docDir, isNavigation) {
   );
 
   const highlighted = processHtml(rendered, panel, docDir);
-  const html = buildHtml(highlighted, panel.title || '', isNavigation);
+  const html = buildHtml(highlighted, panel.title || '', isNavigation, panel.webview);
 
   if (isNavigation) {
     panel.webview.html = '<!DOCTYPE html><html><body></body></html>';
@@ -32,24 +31,19 @@ function processHtml(rendered, panel, docDir) {
     }
   );
 
-  return imgFixed.replace(
-    /<pre[^>]*>\s*<code class="language-(\w+)">([\s\S]*?)<\/code>\s*<\/pre>/g,
-    (match, lang, code) => {
+  var mermaidFixed = imgFixed.replace(
+    /<pre[^>]*>\s*<code[^>]*class="[^"]*language-mermaid"[^>]*>([\s\S]*?)<\/code>\s*<\/pre>/g,
+    (match, code) => {
       const raw = code
         .replace(/&lt;/g, '<')
         .replace(/&gt;/g, '>')
         .replace(/&amp;/g, '&')
         .replace(/&quot;/g, '"');
-      try {
-        const result = hljs.getLanguage(lang)
-          ? hljs.highlight(raw, { language: lang, ignoreIllegals: true }).value
-          : hljs.highlightAuto(raw).value;
-        return '<pre data-lang="' + lang + '"><code class="language-' + lang + ' hljs">' + result + '</code></pre>';
-      } catch {
-        return match;
-      }
+      return '<div class="mermaid">' + raw + '</div>';
     }
   );
+
+  return mermaidFixed;
 }
 
 module.exports = { renderPanel };

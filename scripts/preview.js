@@ -59,6 +59,7 @@ tocToggle.addEventListener("click", function(e) {
   e.stopPropagation();
   var visible = tocPanel.classList.toggle("visible");
   tocToggle.classList.toggle("active", visible);
+  document.documentElement.classList.toggle("toc-open", visible);
 });
 
 tocList.addEventListener("click", function(e) {
@@ -66,15 +67,6 @@ tocList.addEventListener("click", function(e) {
   if (!li) return;
   var target = document.getElementById(li.getAttribute("data-target"));
   if (target) target.scrollIntoView({ behavior: "smooth" });
-  tocPanel.classList.remove("visible");
-  tocToggle.classList.remove("active");
-});
-
-document.addEventListener("click", function(e) {
-  if (!tocPanel.contains(e.target) && e.target !== tocToggle) {
-    tocPanel.classList.remove("visible");
-    tocToggle.classList.remove("active");
-  }
 });
 
 function updateTocHighlight() {

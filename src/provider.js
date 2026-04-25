@@ -16,9 +16,11 @@ class MarkdownReadProvider {
     const docDir = path.dirname(docUri.fsPath);
     const workspaceFolders = (vscode.workspace.workspaceFolders ?? []).map((f) => f.uri);
 
+    const extensionRoot = path.join(__dirname, '..');
+
     webviewPanel.webview.options = {
       enableScripts: true,
-      localResourceRoots: [vscode.Uri.file(docDir), ...workspaceFolders]
+      localResourceRoots: [vscode.Uri.file(docDir), vscode.Uri.file(extensionRoot), ...workspaceFolders]
     };
 
     webviewPanel.docUri = docUri;

@@ -7,5 +7,17 @@ node_modules/**/README.md
 node_modules/**/SECURITY.md
 node_modules/**/SUPPORTED_LANGUAGES.md
 node_modules/**/VERSION_*.md
+node_modules/mermaid/dist/*.map
+node_modules/mermaid/dist/*.mjs
+node_modules/mermaid/dist/*.d.ts
+node_modules/mermaid/dist/mermaid.js
+node_modules/mermaid/dist/__mocks__/
+node_modules/mermaid/dist/chunks/
+node_modules/mermaid/dist/dagre-wrapper/
+node_modules/mermaid/dist/diagram-api/
+node_modules/mermaid/dist/diagrams/
+node_modules/mermaid/dist/docs/
+node_modules/mermaid/dist/rendering-util/
+node_modules/mermaid/dist/*.spec.d.ts
 .vscode/
 *.vsix
