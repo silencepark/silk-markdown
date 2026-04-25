@@ -1,0 +1,11 @@
+.claude/
+node_modules/**/es/
+node_modules/**/scss/
+node_modules/**/styles/
+node_modules/**/CHANGES.md
+node_modules/**/README.md
+node_modules/**/SECURITY.md
+node_modules/**/SUPPORTED_LANGUAGES.md
+node_modules/**/VERSION_*.md
+.vscode/
+*.vsix

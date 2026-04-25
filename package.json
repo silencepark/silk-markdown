@@ -1,0 +1,99 @@
+{
+  "name": "silk-markdown",
+  "displayName": "Silk Markdown",
+  "description": "A silky-smooth Markdown reader for VS Code — beautiful preview with syntax highlighting, TOC outline, and seamless navigation.",
+  "version": "0.1.0",
+  "publisher": "Rainy",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "markdown",
+    "preview",
+    "reader",
+    "obsidian",
+    "toc",
+    "outline"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/silencepark/silk-markdown"
+  },
+  "homepage": "https://github.com/silencepark/silk-markdown#readme",
+  "bugs": {
+    "url": "https://github.com/silencepark/silk-markdown/issues"
+  },
+  "author": "Rainy",
+  "license": "MIT",
+  "icon": "images/icon.png",
+  "activationEvents": [],
+  "main": "./extension.js",
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "silk-md-preview",
+        "displayName": "Silk Markdown 阅读模式",
+        "selector": [
+          {
+            "filenamePattern": "*.md"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "silk-md.toggleMode",
+        "title": "切换到阅读模式",
+        "icon": {
+          "light": "./icons/preview-light.svg",
+          "dark": "./icons/preview-dark.svg"
+        }
+      },
+      {
+        "command": "silk-md.toggleModeReading",
+        "title": "切换到编辑模式",
+        "icon": {
+          "light": "./icons/edit-light.svg",
+          "dark": "./icons/edit-dark.svg"
+        }
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "silk-md.toggleMode",
+          "when": "editorLangId == markdown",
+          "group": "navigation"
+        },
+        {
+          "command": "silk-md.toggleModeReading",
+          "when": "activeWebviewPanelId == silk-md-preview",
+          "group": "navigation"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "silk-md.toggleMode",
+        "key": "ctrl+shift+v",
+        "when": "editorLangId == markdown"
+      },
+      {
+        "command": "silk-md.toggleModeReading",
+        "key": "ctrl+shift+v",
+        "when": "activeWebviewPanelId == silk-md-preview"
+      }
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "highlight.js": "^11.11.1"
+  }
+}

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+  <!-- 铅笔图标：退出阅读模式（浅色主题用深色） -->
+  <path d="M11.5 2.5l2 2L5 13H3v-2L11.5 2.5z" stroke="#424242" stroke-width="1.2" fill="none" stroke-linejoin="round"/>
+  <path d="M10 4l2 2" stroke="#424242" stroke-width="1.2"/>
+</svg>
